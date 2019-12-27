@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/")
+@RequestMapping("api/doctor")
 public class DoctorController {
 
    @Autowired
@@ -24,7 +24,7 @@ public class DoctorController {
       return doctorService.getDoctor(id);
    }
 
-   @RequestMapping(method = RequestMethod.POST, value = "add/doctor")
+   @RequestMapping(method = RequestMethod.POST, value = "add")
    public void addDoctor(@RequestBody Doctor doctor) {
       doctorService.addDoctor(doctor);
    }
@@ -39,8 +39,8 @@ public class DoctorController {
       doctorService.deleteDoctor(id);
    }
 
-   @RequestMapping("/doctors/username/{username}")
-   public List<Doctor> getDoctorsByUserName(@PathVariable("username") String username) {
+   @RequestMapping("/username/{username}")
+   public Doctor getDoctorsByUserName(@PathVariable("username") String username) {
       return doctorService.findDoctorByUsername(username);
    }
 

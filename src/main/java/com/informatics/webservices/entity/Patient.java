@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,14 @@ public class Patient extends Audit implements Serializable {
          fetch = FetchType.LAZY)
    private List<Appointment> appointments = new ArrayList<>();
 
+   @Column(name = "roles", nullable = false)
+   private String roles = "";
+
+   @Column(name="permissions")
+   private String permissions = "";
+
+   private int active;
+
    public Patient(String username, String password, String roles, String permissions, String name,
          Date healthInsuranceDate, boolean isHealthInsured, Date dateOfChangedGp, Doctor doctorGp,
          List<Appointment> appointments) {
@@ -52,6 +61,7 @@ public class Patient extends Audit implements Serializable {
       this.dateOfChangedGp = dateOfChangedGp;
       this.doctorGp = doctorGp;
       this.appointments = appointments;
+      this.active=1;
    }
 
    public Long getId() {
@@ -114,4 +124,25 @@ public class Patient extends Audit implements Serializable {
       this.doctorGp = doctorGp;
    }
 
+   public String getRoles() {
+      return this.roles;
+   }
+
+   public void setRoles(String roles) {
+      this.roles = roles;
+   }
+
+   public List<String> getRoleList(){
+      if(this.roles.length() > 0){
+         return Arrays.asList(this.roles.split(","));
+      }
+      return new ArrayList<>();
+   }
+
+   public List<String> getPermissionList(){
+      if(this.permissions.length() > 0){
+         return Arrays.asList(this.permissions.split(","));
+      }
+      return new ArrayList<>();
+   }
 }

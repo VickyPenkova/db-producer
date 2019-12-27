@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Table(name = "doctors", schema = "DoctorAppointments")
@@ -29,8 +30,11 @@ public class Doctor extends Audit implements Serializable {
     private String medicalSpeciality;
     @Column(name = "is_gp", nullable = false)
     private boolean isGp;
-    @Column(name = "role", nullable = false)
-    private String role;
+    @Column(name = "roles", nullable = false)
+    private String roles;
+
+    @Column(name="permissions")
+    private String permissions = "";
 
     @OneToMany(mappedBy = "doctorGp", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Patient> patients = new ArrayList<>();
@@ -44,23 +48,15 @@ public class Doctor extends Audit implements Serializable {
     public Doctor() {
     }
 
-    public Doctor(String name, String username, String password, String medicalSpeciality, boolean isGp, String role) {
+    public Doctor(String name, String username, String password, String medicalSpeciality, boolean isGp, String roles) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.medicalSpeciality = medicalSpeciality;
         this.isGp = isGp;
-        this.role = role;
+        this.roles = roles;
         this.active = 1;
     }
-//
-//    public long getId() {
-//      return this.id;
-//    }
-//
-//    public void setId(long id) {
-//      this.id = id;
-//    }
 
     public String getUsername() {
         return username;
@@ -106,11 +102,25 @@ public class Doctor extends Audit implements Serializable {
         return active;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(String role) {
+        this.roles = role;
+    }
+
+    public List<String> getRoleList(){
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
+
+    public List<String> getPermissionList(){
+        if(this.permissions.length() > 0){
+            return Arrays.asList(this.permissions.split(","));
+        }
+        return new ArrayList<>();
     }
 }
