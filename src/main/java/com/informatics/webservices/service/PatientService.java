@@ -1,23 +1,24 @@
 package com.informatics.webservices.service;
 
-import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.entity.Patient;
-import com.informatics.webservices.repository.DoctorRepository;
 import com.informatics.webservices.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PatientService {
    @Autowired
    private PatientRepository patientRepository;
 
-   @Autowired
-   private DoctorRepository doctorRepository;
+   private PasswordEncoder passwordEncoder;
+
+   public PatientService(PasswordEncoder passwordEncoder) {
+      this.passwordEncoder = passwordEncoder;
+   }
 
    public List<Patient> getPatients() {
       List<Patient> patientsList = new ArrayList<>();
@@ -33,6 +34,7 @@ public class PatientService {
    }
 
    public void addPatient(Patient patient) {
+      patient.setPassword(this.passwordEncoder.encode(patient.getPassword()));
       patientRepository.save(patient);
    }
 

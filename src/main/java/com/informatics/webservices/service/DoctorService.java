@@ -1,19 +1,25 @@
 package com.informatics.webservices.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    private PasswordEncoder passwordEncoder;
+
+    public DoctorService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public List<Doctor> getDoctors() {
         List<Doctor> doctorsList = new ArrayList<>();
@@ -29,6 +35,7 @@ public class DoctorService {
     }
 
     public void addDoctor(Doctor doctor) {
+        doctor.setPassword(this.passwordEncoder.encode(doctor.getPassword()));
         doctorRepository.save(doctor);
     }
 

@@ -1,6 +1,5 @@
 package com.informatics.webservices.controller;
 
-import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.entity.Patient;
 import com.informatics.webservices.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
