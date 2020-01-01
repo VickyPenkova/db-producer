@@ -1,5 +1,7 @@
 package com.informatics.webservices.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,10 +33,10 @@ public class Appointment extends Audit implements Serializable {
    private String medication;
 
    @Temporal(TemporalType.TIMESTAMP)
-   @Column(name = "sick_leave_start_date", nullable = false)
+   @Column(name = "sick_leave_start_date")
    private Date sickLeaveStartDate;
 
-   @Column(name = "sick_leave_days", nullable = false)
+   @Column(name = "sick_leave_days")
    private int sickLeaveDays;
 
    @ManyToOne
@@ -44,6 +46,8 @@ public class Appointment extends Audit implements Serializable {
    @ManyToOne
    @JoinColumn(name = "fk_patient", nullable = false)
    private Patient patient;
+
+   public Appointment(){}
 
    public Long getId() {
       return id;
@@ -93,6 +97,7 @@ public class Appointment extends Audit implements Serializable {
       this.sickLeaveDays = sickLeaveDays;
    }
 
+   @JsonBackReference(value = "doctor-appointment")
    public Doctor getDoctor() {
       return doctor;
    }
@@ -101,6 +106,7 @@ public class Appointment extends Audit implements Serializable {
       this.doctor = doctor;
    }
 
+   @JsonBackReference(value = "patient-appointment")
    public Patient getPatient() {
       return patient;
    }

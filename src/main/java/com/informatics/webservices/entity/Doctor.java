@@ -1,5 +1,8 @@
 package com.informatics.webservices.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,114 +16,141 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Table(name = "doctors", schema = "DoctorAppointments")
 @Entity
 public class Doctor extends Audit implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "username", nullable = false)
-    private String username; // will retrieve the DB for user with such EGN as Id
-    @Column(name = "name", nullable = false)
-    private String name; // User's full name
-    @Column(name = "doctor_password", nullable = false)
-    private String password;
-    @Column(name = "speciality", nullable = false)
-    private String medicalSpeciality;
-    @Column(name = "is_gp", nullable = false)
-    private boolean isGp;
-    @Column(name = "roles", nullable = false)
-    private String roles;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
+   @Column(name = "username", nullable = false)
+   private String username; // will retrieve the DB for user with such EGN as Id
+   @Column(name = "name", nullable = false)
+   private String name; // User's full name
+   @Column(name = "doctor_password", nullable = false)
+   private String password;
+   @Column(name = "speciality", nullable = false)
+   private String medicalSpeciality;
+   @Column(name = "is_gp", nullable = false)
+   private boolean isGp;
+   @Column(name = "roles", nullable = false)
+   private String roles;
 
-    @Column(name="permissions")
-    private String permissions = "";
+   @Column(name = "permissions")
+   private String permissions = "";
 
-    @OneToMany(mappedBy = "doctorGp", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Patient> patients = new ArrayList<>();
+   @OneToMany(mappedBy = "doctorGp", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   private List<Patient> patients = new ArrayList<>();
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, //If we delete a doctor it will be removed from everywhere
-          fetch = FetchType.LAZY)
-    private List<Appointment> appointments = new ArrayList<>();
+   @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   private List<Appointment> appointments = new ArrayList<>();
 
-    private int active;
+   private int active = 1;
 
-    public Doctor() {
-    }
+   public Doctor() {
+   }
 
-    public Doctor(String name, String username, String password, String medicalSpeciality, boolean isGp, String roles) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.medicalSpeciality = medicalSpeciality;
-        this.isGp = isGp;
-        this.roles = roles;
-        this.active = 1;
-    }
+   public Doctor(String name, String username, String password, String medicalSpeciality, boolean isGp, String roles,
+         int active) {
+      this.username = username;
+      this.password = password;
+      this.name = name;
+      this.medicalSpeciality = medicalSpeciality;
+      this.isGp = isGp;
+      this.roles = roles;
+      this.active = active;
+   }
 
-    public String getUsername() {
-        return username;
-    }
+   public Long getId() {
+      return id;
+   }
 
-    public void setUsername(String egn) {
-        this.username = egn;
-    }
+   public void setId(Long id) {
+      this.id = id;
+   }
 
-    public String getName() {
-        return name;
-    }
+   public String getUsername() {
+      return username;
+   }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+   public void setUsername(String egn) {
+      this.username = egn;
+   }
 
-    public String getPassword() {
-        return password;
-    }
+   public String getName() {
+      return name;
+   }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+   public void setName(String name) {
+      this.name = name;
+   }
 
-    public String getMedicalSpeciality() {
-        return medicalSpeciality;
-    }
+   public String getPassword() {
+      return password;
+   }
 
-    public void setMedicalSpeciality(String medicalSpeciality) {
-        this.medicalSpeciality = medicalSpeciality;
-    }
+   public void setPassword(String password) {
+      this.password = password;
+   }
 
-    public boolean isGp() {
-        return isGp;
-    }
+   public String getMedicalSpeciality() {
+      return medicalSpeciality;
+   }
 
-    public void setGp(boolean gp) {
-        isGp = gp;
-    }
+   public void setMedicalSpeciality(String medicalSpeciality) {
+      this.medicalSpeciality = medicalSpeciality;
+   }
 
-    public int getActive() {
-        return active;
-    }
+   public boolean isGp() {
+      return isGp;
+   }
 
-    public String getRoles() {
-        return roles;
-    }
+   public void setGp(boolean gp) {
+      isGp = gp;
+   }
 
-    public void setRoles(String role) {
-        this.roles = role;
-    }
+   public int getActive() {
+      return active;
+   }
 
-    public List<String> getRoleList(){
-        if(this.roles.length() > 0){
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
-    }
+   public String getRoles() {
+      return roles;
+   }
 
-    public List<String> getPermissionList(){
-        if(this.permissions.length() > 0){
-            return Arrays.asList(this.permissions.split(","));
-        }
-        return new ArrayList<>();
-    }
+   public void setRoles(String role) {
+      this.roles = role;
+   }
+
+   @JsonManagedReference
+   public List<Patient> getPatients() {
+      return patients;
+   }
+
+   public void setPatients(List<Patient> patients) {
+      this.patients = patients;
+   }
+
+   @JsonManagedReference(value = "doctor-appointment")
+   public List<Appointment> getAppointments() {
+      return appointments;
+   }
+
+   public void setAppointments(List<Appointment> appointments) {
+      this.appointments = appointments;
+   }
+
+   public List<String> getRoleList() {
+      if (this.roles.length() > 0) {
+         return Arrays.asList(this.roles.split(","));
+      }
+      return new ArrayList<>();
+   }
+
+   public List<String> getPermissionList() {
+      if (this.permissions.length() > 0) {
+         return Arrays.asList(this.permissions.split(","));
+      }
+      return new ArrayList<>();
+   }
 }

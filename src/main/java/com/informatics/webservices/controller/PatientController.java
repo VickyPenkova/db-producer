@@ -23,23 +23,23 @@ public class PatientController {
       return this.patientService.getPatients();
    }
 
-   @RequestMapping("/patients/{id}")
-   public Patient getPatient(@PathVariable("id") int id) {
+   @RequestMapping("/{id}")
+   public Patient getPatient(@PathVariable("id") long id) {
       return this.patientService.getPatient(id);
    }
 
-   @RequestMapping(method = RequestMethod.POST, value = "add")
+   @RequestMapping(method = RequestMethod.POST, value = "/add")
    public void addPatient(@RequestBody Patient patient) {
       this.patientService.addPatient(patient);
    }
 
-   @RequestMapping(method = RequestMethod.PUT, value = "/patients")
+   @RequestMapping(method = RequestMethod.PUT, value = "/update")
    public void updatePatient(@RequestBody Patient patient) {
-      this.patientService.addPatient(patient);
+      this.patientService.updatePatient(patient);
    }
 
-   @RequestMapping(method = RequestMethod.DELETE, value = "/patients/{id}")
-   public void deletePatient(@PathVariable("id") int id) {
+   @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
+   public void deletePatient(@PathVariable("id") long id) {
       this.patientService.deletePatient(id);
    }
 

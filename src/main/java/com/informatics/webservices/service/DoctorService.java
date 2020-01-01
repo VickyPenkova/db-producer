@@ -32,7 +32,7 @@ public class DoctorService {
         doctorRepository.save(doctor);
     }
 
-    public void updateDoctor(long id, Doctor doctor) {
+    public void updateDoctor(Doctor doctor) {
         doctorRepository.save(doctor);
     }
 

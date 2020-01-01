@@ -1,5 +1,9 @@
 package com.informatics.webservices.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +31,8 @@ public class Patient extends Audit implements Serializable {
    private Long id;
    @Column(name = "username", nullable = false)
    private String username; // will retrieve the DB for user with such EGN as Id
+   @Column(name = "patient_password", nullable = false)
+   private String password;
    @Column(name = "name", nullable = false)
    private String name;
    @Temporal(TemporalType.TIMESTAMP)
@@ -35,13 +41,13 @@ public class Patient extends Audit implements Serializable {
    @Column(name = "is_health_insured", nullable = false)
    private boolean isHealthInsured;
    @Temporal(TemporalType.TIMESTAMP)
-   @Column(name = "date_of_changed_gp", nullable = false)
+   @Column(name = "date_of_changed_gp")
    private Date dateOfChangedGp;
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "doctor_id", nullable = false)
+
+   @ManyToOne
+   @JoinColumn(name = "doctor_id",referencedColumnName = "id", nullable = false)
    private Doctor doctorGp;
-   @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, //If we delete a patient it will be removed from everywhere
-         fetch = FetchType.LAZY)
+   @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
    private List<Appointment> appointments = new ArrayList<>();
 
    @Column(name = "roles", nullable = false)
@@ -50,18 +56,21 @@ public class Patient extends Audit implements Serializable {
    @Column(name="permissions")
    private String permissions = "";
 
-   private int active;
+   private int active = 1;
 
-   public Patient(String username, String password, String roles, String permissions, String name,
-         Date healthInsuranceDate, boolean isHealthInsured, Date dateOfChangedGp, Doctor doctorGp,
-         List<Appointment> appointments) {
+   public Patient(){}
+
+   public Patient(String username, String password, String roles, String name,
+         Date healthInsuranceDate, boolean isHealthInsured, Doctor doctorGp, int active) {
+      this.username = username;
+      this.password = password;
       this.name = name;
       this.healthInsuranceDate = healthInsuranceDate;
       this.isHealthInsured = isHealthInsured;
-      this.dateOfChangedGp = dateOfChangedGp;
+      this.dateOfChangedGp = this.getCreatedAt();
       this.doctorGp = doctorGp;
-      this.appointments = appointments;
-      this.active=1;
+      this.roles = roles;
+      this.active=active;
    }
 
    public Long getId() {
@@ -78,6 +87,14 @@ public class Patient extends Audit implements Serializable {
 
    public void setUsername(String username) {
       this.username = username;
+   }
+
+   public String getPassword() {
+      return password;
+   }
+
+   public void setPassword(String password) {
+      this.password = password;
    }
 
    public String getName() {
@@ -116,6 +133,7 @@ public class Patient extends Audit implements Serializable {
       this.dateOfChangedGp = dateOfChangedGp;
    }
 
+   @JsonBackReference
    public Doctor getDoctorGp() {
       return doctorGp;
    }
@@ -124,12 +142,29 @@ public class Patient extends Audit implements Serializable {
       this.doctorGp = doctorGp;
    }
 
+   @JsonManagedReference(value = "patient-appointment")
+   public List<Appointment> getAppointments() {
+      return appointments;
+   }
+
+   public void setAppointments(List<Appointment> appointments) {
+      this.appointments = appointments;
+   }
+
    public String getRoles() {
       return this.roles;
    }
 
    public void setRoles(String roles) {
       this.roles = roles;
+   }
+
+   public int getActive() {
+      return active;
+   }
+
+   public void setActive(int active) {
+      this.active = active;
    }
 
    public List<String> getRoleList(){
