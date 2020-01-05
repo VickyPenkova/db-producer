@@ -1,6 +1,7 @@
 package com.informatics.webservices.service;
 
 import com.informatics.webservices.entity.Doctor;
+import com.informatics.webservices.entity.Patient;
 import com.informatics.webservices.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,8 +24,7 @@ public class DoctorService {
 
     public List<Doctor> getDoctors() {
         List<Doctor> doctorsList = new ArrayList<>();
-        doctorRepository.findAll().forEach(course -> doctorsList.add(course));
-
+        doctorRepository.findAll().forEach(doctor -> doctorsList.add(doctor));
         return doctorsList;
     }
 
@@ -42,6 +42,12 @@ public class DoctorService {
     public void updateDoctor(Doctor doctor) {
         doctorRepository.save(doctor);
     }
+    public void updateDoctor(String username, Doctor doctor) {
+
+        doctorRepository.save(doctor);
+    }
+
+
 
     public void deleteDoctor(long id) {
         Doctor doctor = doctorRepository.findById(id)
@@ -49,8 +55,32 @@ public class DoctorService {
         doctorRepository.delete(doctor);
     }
 
+    public void deleteDoctor(String username) {
+        Doctor doctor = doctorRepository.findDoctorByUsername(username);
+        doctorRepository.delete(doctor);
+    }
+
+
+
     public Doctor findDoctorByUsername(String username) {
         return doctorRepository.findDoctorByUsername(username);
+    }
+
+    public void updateGP(String username, String newDocUsername){
+
+
+        Doctor old = doctorRepository.findDoctorByUsername(username);
+        Doctor newDoc = doctorRepository.findDoctorByUsername(newDocUsername);
+
+        if(newDoc.isGp()==false){
+            newDoc.setGp(true);
+        }
+
+        List<Patient> patientList = newDoc.getPatients();
+        old.getPatients().forEach(p -> patientList.add(p));
+
+        newDoc.setPatients(patientList);
+
     }
 
 }
