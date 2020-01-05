@@ -48,13 +48,13 @@ public class Patient extends Audit implements Serializable {
    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
    private List<Appointment> appointments = new ArrayList<>();
 
-   @Column(name = "roles", nullable = false)
-   private String roles = "";
+      @Column(name = "roles", nullable = false)
+      private String roles = "";
 
-   @Column(name="permissions")
-   private String permissions = "";
+      @Column(name="permissions")
+      private String permissions = "";
 
-   private int active = 1;
+      private int active = 1;
 
    public Patient(){}
 
