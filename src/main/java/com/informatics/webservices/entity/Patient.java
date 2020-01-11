@@ -70,6 +70,19 @@ public class Patient extends Audit implements Serializable {
       this.roles = roles;
       this.active=active;
    }
+   public Patient(String username, String password, String roles, String name,
+                  Date healthInsuranceDate, Date dateOfChangedGp,boolean isHealthInsured, Doctor doctorGp, int active) {
+      this.username = username;
+      this.password = password;
+      this.name = name;
+      this.healthInsuranceDate = healthInsuranceDate;
+      this.isHealthInsured = isHealthInsured;
+      this.dateOfChangedGp = dateOfChangedGp;
+      this.doctorGp = doctorGp;
+      this.roles = roles;
+      this.active=active;
+   }
+
 
    public Long getId() {
       return id;
