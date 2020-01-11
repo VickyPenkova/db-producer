@@ -1,14 +1,11 @@
 package com.informatics.webservices.controller;
 
-import com.informatics.webservices.dao.LoginViewModel;
 import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.entity.Patient;
 import com.informatics.webservices.service.DoctorService;
 import com.informatics.webservices.service.PatientService;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +19,6 @@ public class UserController {
    @Autowired
    private PatientService patientService;
 
-   //TODO: TEST
    @RequestMapping(value = "/get/{username}", method = RequestMethod.GET)
    public Object getUser(@PathVariable("username") String username){
 

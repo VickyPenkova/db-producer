@@ -39,10 +39,10 @@ public class DoctorController {
         doctorService.updateDoctor(doctor);
     }
 
-//    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
-//    public void deleteDoctor(@PathVariable("id") long id) {
-//        doctorService.deleteDoctor(id);
-//    }
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
+    public void deleteDoctor(@PathVariable("id") long id) {
+        doctorService.deleteDoctor(id);
+    }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{username}")
     public void deleteDoctorByUsername(@PathVariable("username") String username) {

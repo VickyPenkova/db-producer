@@ -1,5 +1,6 @@
 package com.informatics.webservices.service;
 
+import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.entity.Patient;
 import com.informatics.webservices.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,9 @@ public class PatientService {
 
    public Patient findPatientByUsername(String username) {
       return patientRepository.findPatientByUsername(username);
+   }
+
+   public Doctor findPatientByDoctorGpUsername(String username){
+      return patientRepository.findPatientByDoctorGpUsername(username);
    }
 }

@@ -1,5 +1,6 @@
 package com.informatics.webservices.controller;
 
+import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.entity.Patient;
 import com.informatics.webservices.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class PatientController {
    @RequestMapping("/username/{username}")
    public Patient getPatientByUsername(@PathVariable("username") String username) {
       return this.patientService.findPatientByUsername(username);
+   }
+
+   @RequestMapping(method = RequestMethod.GET, value = "/{username}/doctor")
+   public Doctor getDoctorByPatientUsername(@PathVariable String username){
+      return this.patientService.findPatientByUsername(username).getDoctorGp();
    }
 
 }
