@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.informatics.webservices.entity.Appointment;
+import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.service.AppointmentService;
 import net.minidev.json.JSONObject;
 import netscape.javascript.JSObject;
@@ -73,10 +74,11 @@ public class AppointmentController {
    public List<Appointment> getAppointmentsByPatientUsername(@PathVariable("username") String username){
       List<Appointment> appointments = appointmentService.getAppointmentsByPatientUsername(username);
 
-      System.out.println(appointments);
+  //    System.out.println(appointments);
 
       return appointments;
    }
+
 
 
    // TODO: TEST!

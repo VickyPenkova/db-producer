@@ -1,7 +1,9 @@
 package com.informatics.webservices.controller;
 
+import com.informatics.webservices.entity.Appointment;
 import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.entity.Patient;
+import com.informatics.webservices.service.AppointmentService;
 import com.informatics.webservices.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,9 @@ import java.util.List;
 public class PatientController {
    @Autowired
    private PatientService patientService;
+
+   @Autowired
+   private AppointmentService appointmentService;
 
    @RequestMapping("/patients")
    public List<Patient> getPatients() {
@@ -51,6 +56,12 @@ public class PatientController {
    @RequestMapping(method = RequestMethod.GET, value = "/{username}/doctor")
    public Doctor getDoctorByPatientUsername(@PathVariable String username){
       return this.patientService.findPatientByUsername(username).getDoctorGp();
+   }
+
+   @RequestMapping(method = RequestMethod.GET, value="/findByAppointment/{id}")
+      public Patient getPatientByAppointments(@PathVariable("id") long id){
+      Appointment app = appointmentService.getAppointment(id);
+      return patientService.findPatientByAppointment(app);
    }
 
 }

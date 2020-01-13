@@ -1,5 +1,6 @@
 package com.informatics.webservices.service;
 
+import com.informatics.webservices.entity.Appointment;
 import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.entity.Patient;
 import com.informatics.webservices.repository.DoctorRepository;
@@ -81,6 +82,12 @@ public class DoctorService {
 
         newDoc.setPatients(patientList);
 
+    }
+
+    public Doctor getDoctorByAppointments(Appointment appointment){
+        List<Appointment> appointments = new ArrayList<>();
+        appointments.add(appointment);
+        return doctorRepository.findDoctorByAppointmentsIn(appointments);
     }
 
 }

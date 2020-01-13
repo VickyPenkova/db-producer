@@ -1,7 +1,9 @@
 package com.informatics.webservices.controller;
 
+import com.informatics.webservices.entity.Appointment;
 import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.entity.Patient;
+import com.informatics.webservices.service.AppointmentService;
 import com.informatics.webservices.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,9 @@ public class DoctorController {
 
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private AppointmentService appointmentService;
 
     @RequestMapping("/doctors")
     public List<Doctor> getDoctors() {
@@ -64,6 +69,13 @@ public class DoctorController {
     public void updateGP(@PathVariable("username") String username,@PathVariable("newDocID") String newDocID){
 
         this.doctorService.updateGP(username,newDocID);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value="/findByAppointment/{id}")
+    public Doctor getDoctorByAppointments(@PathVariable long id){
+        Appointment app = appointmentService.getAppointment(id);
+        return doctorService.getDoctorByAppointments(app);
+
     }
 
 }

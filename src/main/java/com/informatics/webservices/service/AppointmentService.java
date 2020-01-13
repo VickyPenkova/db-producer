@@ -1,7 +1,9 @@
 package com.informatics.webservices.service;
 
 import com.informatics.webservices.entity.Appointment;
+import com.informatics.webservices.entity.Doctor;
 import com.informatics.webservices.repository.AppointmentRepository;
+import com.informatics.webservices.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,10 @@ import java.util.List;
 
 @Service
 public class AppointmentService {
+
    @Autowired
    AppointmentRepository appointmentRepository;
+
 
    public List<Appointment> getAppointments() {
       List<Appointment> appointmentsList = new ArrayList<>(appointmentRepository.findAll());
@@ -70,5 +74,6 @@ public class AppointmentService {
    public List<Appointment> getAppointmentsByDateOfAppointment(Date dateOfAppointment) {
       return appointmentRepository.getAppointmentsByDateOfAppointment(dateOfAppointment);
    }
+
 
 }
