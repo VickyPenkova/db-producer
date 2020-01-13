@@ -44,8 +44,10 @@ public class PatientService {
    }
 
    public void deletePatient(long id) {
+
       Patient patient = patientRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
+
       patientRepository.delete(patient);
    }
 

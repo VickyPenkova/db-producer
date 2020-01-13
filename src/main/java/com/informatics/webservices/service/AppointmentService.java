@@ -3,6 +3,7 @@ package com.informatics.webservices.service;
 import com.informatics.webservices.entity.Appointment;
 import com.informatics.webservices.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +32,9 @@ public class AppointmentService {
        * Any patient can make an appointment with any doctor(even if it's not his/hers GP)
        */
 
-      appointmentRepository.save(appointment);
+      Appointment app= appointment;
+
+      appointmentRepository.save(app);
    }
 
    public void updateAppointment(Appointment appointment) {
@@ -48,9 +51,20 @@ public class AppointmentService {
       return appointmentRepository.getAppointmentsByDoctorId(doctorId);
    }
 
+   public List<Appointment> getAppointmentsByDoctorUsername(String username) {
+      System.out.println(appointmentRepository.getAppointmentsByDoctorUsername(username));
+      return appointmentRepository.getAppointmentsByDoctorUsername(username);
+   }
+
 
    public List<Appointment> getAppointmentsByPatientId(long patientId) {
       return appointmentRepository.getAppointmentsByPatientId(patientId);
+   }
+
+   public List<Appointment> getAppointmentsByPatientUsername(String username) {
+
+      List<Appointment> appointments = appointmentRepository.getAppointmentsByPatientUsername(username);
+      return appointments;
    }
 
    public List<Appointment> getAppointmentsByDateOfAppointment(Date dateOfAppointment) {

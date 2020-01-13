@@ -1,8 +1,16 @@
 package com.informatics.webservices.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.informatics.webservices.entity.Appointment;
 import com.informatics.webservices.service.AppointmentService;
+import net.minidev.json.JSONObject;
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,15 +33,16 @@ public class AppointmentController {
 
    @RequestMapping("/{id}")
    public Appointment getAppointment(@PathVariable("id") int id) {
-      return appointmentService.getAppointment(id);
+      Appointment appointment = appointmentService.getAppointment(id);
+      return appointment;
    }
-
    @RequestMapping(method = RequestMethod.POST, value = "/add")
    public void addAppointment(@RequestBody Appointment appointment) {
+
       appointmentService.addAppointment(appointment);
    }
 
-   @RequestMapping(method = RequestMethod.PUT, value = "/update")
+   @RequestMapping(method = RequestMethod.PUT, value = "/update", headers = "Accept=application/json")
    public void updateAppointment(@RequestBody Appointment appointment) {
       appointmentService.updateAppointment(appointment);
    }
@@ -43,16 +52,32 @@ public class AppointmentController {
       appointmentService.deleteAppointment(id);
    }
 
-   @RequestMapping(method = RequestMethod.GET, value = "/appointments/doctor/{id}")
-   public List<Appointment> getAppointmentsByDoctorId(@PathVariable("id") long doctorId){
+//   @RequestMapping(method = RequestMethod.GET, value = "/appointments/doctor/{id}")
+//   public List<Appointment> getAppointmentsByDoctorId(@PathVariable("id") long doctorId){
+//
+//      return appointmentService.getAppointmentsByDoctorId(doctorId);
+//   }
 
-      return appointmentService.getAppointmentsByDoctorId(doctorId);
+   @RequestMapping(method = RequestMethod.GET, value = "/appointments/doctor/{username}")
+   public List<Appointment> getAppointmentsByDoctorUsername(@PathVariable("username") String username){
+
+      return appointmentService.getAppointmentsByDoctorUsername(username);
    }
 
-   @RequestMapping(method = RequestMethod.GET, value = "/appointments/patient/{id}")
-   public List<Appointment> getAppointmentsByPatientId(@PathVariable("id") long id){
-      return appointmentService.getAppointmentsByPatientId(id);
+//   @RequestMapping(method = RequestMethod.GET, value = "/appointments/patient/{id}")
+//   public List<Appointment> getAppointmentsByPatientId(@PathVariable("id") long id){
+//      return appointmentService.getAppointmentsByPatientId(id);
+//   }
+
+   @RequestMapping(method = RequestMethod.GET, value = "/appointments/patient/{username}")
+   public List<Appointment> getAppointmentsByPatientUsername(@PathVariable("username") String username){
+      List<Appointment> appointments = appointmentService.getAppointmentsByPatientUsername(username);
+
+      System.out.println(appointments);
+
+      return appointments;
    }
+
 
    // TODO: TEST!
    @RequestMapping(method = RequestMethod.GET, value = "/appointments/byDate")

@@ -47,7 +47,30 @@ public class Appointment extends Audit implements Serializable {
    @JoinColumn(name = "fk_patient", nullable = false)
    private Patient patient;
 
+   @Column(name = "patient_username")
+   private String patientusername;
+
+   @Column(name = "doctor_username")
+   private String doctorusername;
+
+   public String getDoctorusername() {
+      return doctorusername;
+   }
+
+   public void setDoctorusername(String doctorusername) {
+      this.doctorusername = doctorusername;
+   }
+
+   public String getPatientusername() {
+      return patientusername;
+   }
+
+   public void setPatientusername(String patientusername) {
+      this.patientusername = patientusername;
+   }
+
    public Appointment(){}
+
 
    public Long getId() {
       return id;
@@ -115,4 +138,3 @@ public class Appointment extends Audit implements Serializable {
       this.patient = patient;
    }
 }
-

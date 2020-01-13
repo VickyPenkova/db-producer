@@ -1,6 +1,6 @@
 package com.informatics.webservices.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,7 +50,7 @@ public class Doctor extends Audit implements Serializable {
    }
 
    public Doctor(String name, String username, String password, String medicalSpeciality, boolean isGp, String roles,
-         int active) {
+                 int active) {
       this.username = username;
       this.password = password;
       this.name = name;
@@ -151,4 +151,5 @@ public class Doctor extends Audit implements Serializable {
       }
       return new ArrayList<>();
    }
+
 }
