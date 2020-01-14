@@ -12,4 +12,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
    Patient findPatientByUsername(String username);
    Doctor findPatientByDoctorGpUsername(String username);
    Patient findPatientByAppointmentsIn(List<Appointment> appointments);
+  List<Patient> findPatientsByDoctorGpUsername(String username);
 }

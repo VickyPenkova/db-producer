@@ -67,5 +67,10 @@ public class PatientService {
 
    }
 
+   public List<Patient> findPatientsByDoctorUsername(String username){
+      return patientRepository.findPatientsByDoctorGpUsername(username);
+
+   }
+
 
 }

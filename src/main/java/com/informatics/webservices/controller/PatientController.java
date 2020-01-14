@@ -64,4 +64,9 @@ public class PatientController {
       return patientService.findPatientByAppointment(app);
    }
 
+   @RequestMapping(method = RequestMethod.GET, value="/findByDoctorUsername/{username}")
+   public List<Patient> getPatientByAppointments(@PathVariable("username") String username){
+      return patientService.findPatientsByDoctorUsername(username);
+   }
+
 }
