@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.informatics.webservices.entity.Appointment;
 import com.informatics.webservices.entity.Doctor;
+import com.informatics.webservices.entity.Patient;
 import com.informatics.webservices.service.AppointmentService;
 import net.minidev.json.JSONObject;
 import netscape.javascript.JSObject;
@@ -79,6 +80,18 @@ public class AppointmentController {
       return appointments;
    }
 
+
+      @RequestMapping(method = RequestMethod.GET, value = "/appointments/patients/{diagnosis}")
+   public List<Patient> getPatientsByDiagnosis(@PathVariable("diagnosis") String diagnosis){
+
+         System.out.println("=================GOT DIAGNOSIS==================");
+      System.out.println(diagnosis);
+
+      List<Patient> patients = appointmentService.findPatientsByDiagnosis(diagnosis);
+
+
+      return patients;
+   }
 
 
    // TODO: TEST!

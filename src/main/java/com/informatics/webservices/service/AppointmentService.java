@@ -2,6 +2,7 @@ package com.informatics.webservices.service;
 
 import com.informatics.webservices.entity.Appointment;
 import com.informatics.webservices.entity.Doctor;
+import com.informatics.webservices.entity.Patient;
 import com.informatics.webservices.repository.AppointmentRepository;
 import com.informatics.webservices.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,22 @@ public class AppointmentService {
       return appointmentRepository.getAppointmentsByDateOfAppointment(dateOfAppointment);
    }
 
+
+
+   public List<Patient> findPatientsByDiagnosis(String diagnosis){
+
+      List<Appointment> appointments = getAppointments();
+      List<Patient> patients = new ArrayList<>();
+
+      for (Appointment appointment:appointments) {
+
+         if(appointment.getDiagnosis().equals(diagnosis))
+            patients.add(appointment.getPatient());
+
+      }
+
+      return patients;
+
+   }
 
 }

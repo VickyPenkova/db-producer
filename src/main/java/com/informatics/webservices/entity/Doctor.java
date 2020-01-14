@@ -41,7 +41,7 @@ public class Doctor extends Audit implements Serializable {
    @OneToMany(mappedBy = "doctorGp", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    private List<Patient> patients = new ArrayList<>();
 
-   @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
    private List<Appointment> appointments = new ArrayList<>();
 
    private int active = 1;
