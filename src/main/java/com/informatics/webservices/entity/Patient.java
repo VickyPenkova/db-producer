@@ -40,7 +40,7 @@ public class Patient extends Audit implements Serializable {
    private boolean isHealthInsured;
    @Temporal(TemporalType.TIMESTAMP)
    @Column(name = "date_of_changed_gp")
-   private Date dateOfChangedGp;
+   private Date dateOfChangedGp = new Date();
 
    @ManyToOne
    @JoinColumn(name = "doctor_id",referencedColumnName = "id", nullable = false)

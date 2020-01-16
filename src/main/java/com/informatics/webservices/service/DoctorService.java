@@ -60,6 +60,7 @@ public class DoctorService {
         Doctor doctor = doctorRepository.findDoctorByUsername(username);
         if (doctor.getAppointments().size() > 0 ){
             doctor.setActive(0);
+            doctorRepository.save(doctor);
         }else{
 
             doctorRepository.delete(doctor);

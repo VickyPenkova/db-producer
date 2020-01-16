@@ -51,6 +51,7 @@ public class PatientService {
 
       if (patient.getAppointments().size() > 0){
          patient.setActive(0);
+         patientRepository.save(patient);
       }else{
          patientRepository.delete(patient);
       }

@@ -69,4 +69,10 @@ public class PatientController {
       return patientService.findPatientsByDoctorUsername(username);
    }
 
+   @RequestMapping("/getToken/{username}")
+   public String getPatientToken(@PathVariable("username") String username){
+      return patientService.findPatientByUsername(username).getAuthToken() == null ? "" : patientService.findPatientByUsername(username).getAuthToken();
+
+   }
+
 }
