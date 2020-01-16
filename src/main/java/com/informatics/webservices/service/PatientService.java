@@ -49,7 +49,11 @@ public class PatientService {
       Patient patient = patientRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid patient Id:" + id));
 
-      patientRepository.delete(patient);
+      if (patient.getAppointments().size() > 0){
+         patient.setActive(0);
+      }else{
+         patientRepository.delete(patient);
+      }
    }
 
    public Patient findPatientByUsername(String username) {

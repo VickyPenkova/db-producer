@@ -35,6 +35,7 @@ public class Doctor extends Audit implements Serializable {
    @Column(name = "roles", nullable = false)
    private String roles;
 
+
    @Column(name = "permissions")
    private String permissions = "";
 
@@ -43,6 +44,13 @@ public class Doctor extends Audit implements Serializable {
 
    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
    private List<Appointment> appointments = new ArrayList<>();
+
+   /*
+   Used fo login authentication
+    */
+   private Integer loginAttempt;
+
+   private String authToken;
 
    private int active = 1;
 
@@ -152,4 +160,23 @@ public class Doctor extends Audit implements Serializable {
       return new ArrayList<>();
    }
 
+   public Integer getLoginAttempt() {
+      return loginAttempt;
+   }
+
+   public void setLoginAttempt(Integer loginAttempt) {
+      this.loginAttempt = loginAttempt;
+   }
+
+   public String getAuthToken() {
+      return authToken;
+   }
+
+   public void setAuthToken(String authToken) {
+      this.authToken = authToken;
+   }
+
+   public void setActive(int active) {
+      this.active = active;
+   }
 }

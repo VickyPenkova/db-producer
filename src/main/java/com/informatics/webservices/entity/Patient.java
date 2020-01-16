@@ -56,6 +56,13 @@ public class Patient extends Audit implements Serializable {
 
    private int active = 1;
 
+   /*
+      Used fo login authentication
+    */
+   private Integer loginAttempt;
+
+   private String authToken;
+
    public Patient(){}
 
    public Patient(String username, String password, String roles, String name,
@@ -190,5 +197,21 @@ public class Patient extends Audit implements Serializable {
          return Arrays.asList(this.permissions.split(","));
       }
       return new ArrayList<>();
+   }
+
+   public Integer getLoginAttempt() {
+      return loginAttempt;
+   }
+
+   public void setLoginAttempt(Integer loginAttempt) {
+      this.loginAttempt = loginAttempt;
+   }
+
+   public String getAuthToken() {
+      return authToken;
+   }
+
+   public void setAuthToken(String authToken) {
+      this.authToken = authToken;
    }
 }

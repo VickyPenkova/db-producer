@@ -58,7 +58,12 @@ public class DoctorService {
 
     public void deleteDoctor(String username) {
         Doctor doctor = doctorRepository.findDoctorByUsername(username);
-        doctorRepository.delete(doctor);
+        if (doctor.getAppointments().size() > 0 ){
+            doctor.setActive(0);
+        }else{
+
+            doctorRepository.delete(doctor);
+        }
     }
 
 
@@ -89,5 +94,4 @@ public class DoctorService {
         appointments.add(appointment);
         return doctorRepository.findDoctorByAppointmentsIn(appointments);
     }
-
 }
